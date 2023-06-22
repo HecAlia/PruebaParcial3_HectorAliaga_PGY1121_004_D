@@ -1,0 +1,121 @@
+Op=0
+OpDoc=0
+SiNo=0
+DatosVehiculo=[]
+Multas=[]
+Doc=[]
+OpEmi=0
+Mult=0
+Menu1=["1)Grabar un vehiculo","2)Buscar un Vehiculo","3)Imprimir un Vehiculo","4)Salir del sistema"]
+Menu2=["1)Emision de contaminantes $1500","2)Anotaciones Vigentes $2000", "3)Multas $3500"]
+print("Bienvenido a AutoSeguro!!")
+while Op<1 or Op>=5:
+    print("Ingrese la opcion que desea utilizar:")
+    print(Menu1[0])
+    print(Menu1[1])
+    print(Menu1[2])
+    print(Menu1[3])
+    Op=int(input("Ingrese una opción: "))
+    if Op==1:
+        print("\nBienvenido al sistema de grabado de vehiculos: \n")
+        Tipo=str(input("Ingrese el tipo de vehiculo: "))
+        Patente=str(input("Ingrese la patente del vehiculo(SIN GUIONES NI PUNTOS): "))
+        Marca=""
+        while len(Marca)<2 or len(Marca)>15:
+            Marca=str(input("Ingrese la marca del vehiculo: "))
+        Precio=0
+        while Precio<=5000000:
+            Precio=int(input("Ingrese el precio del vehiculo: "))
+        FechaReg=(input("Ingrese la fecha del registro de su vehiculo (Con este formato: D/M/A): "))
+        NomDueño=input("Ingrese el nombre del dueño del vehiculo: ")
+        while SiNo<1 or SiNo>2:
+            SiNo=int(input("¿El vehiculo tiene alguna multa vigente?:\n1)Si\n2)No\n"))
+            if SiNo==1:
+                MontoM=(input("Ingrese el monto de su multa: "))
+                FechaM=(input("Ingrese la fecha de su multa (D/M/A):"))
+                Multa=[FechaM,MontoM]
+                Multas.append(Multa)
+                OtraM=int(input("¿Usted tiene alguna otra multa:\n1)Si\n2)No\n"))
+                if OtraM==1:
+                    MontoM=""
+                    FechaM=""
+                    SiNo=0
+                elif OtraM==2:
+                    print("MULTAS INGRESADAS")
+            elif SiNo==2:
+                print(".")
+        Vehiculo=[Tipo,Patente,Marca,Precio,FechaReg,NomDueño,Multas]
+        DatosVehiculo.append(Vehiculo)
+        Op=0
+    elif Op==2:
+        print("Bienvenido al buscador de vehiculos: ")
+        BusquedaPatente=input("Ingrese la patente del vehiculo del cual desea buscar (SIN GUIONES NI PUNTOS): ")
+        VehEncontrado=None
+        for Vehiculo in DatosVehiculo:
+            if Vehiculo[1]==BusquedaPatente:
+                VehEncontrado=Vehiculo
+                break
+        if VehEncontrado is not None:
+            print("Vehiculo encontrado: ")
+            print(f"Tipo: {VehEncontrado[0]}")
+            print(f"Patente: {VehEncontrado[1]}")
+            print(f"Marca: {VehEncontrado[2]}")
+            print(f"Precio: {VehEncontrado[3]}")
+            print(f"Fecha de registro: {VehEncontrado[4]}")
+            print(f"Nombre del Dueño: {VehEncontrado[5]}")
+            print(f"Multas: {VehEncontrado[6]}")
+        else:
+            print("Vehiculo no encontrado")
+        Op=0
+    elif Op==3:
+        print("Bienvenido al visor y imprimidor de certificados de vehiculos")
+        BusquedaPatente=input("Ingrese la patente del vehiculo del cual desea imprimir los documentos (SIN GUIONES NI PUNTOS): ")
+        VehEncontrado=None
+        for Vehiculo in DatosVehiculo:
+            if Vehiculo[1]==BusquedaPatente:
+                VehEncontrado=Vehiculo
+                break
+        if VehEncontrado is not None:
+            while OpDoc<1 or OpDoc>4:
+                print("¿Que archivo desea imprimir?:")
+                print(Menu2[0])
+                print(Menu2[1])
+                print(Menu2[2])
+                OpDoc=int(input("Ingrese el documento que desea imprmir: "))
+                if OpDoc==1:
+                    EmiDoc=(f"Emision de contaminantes:Fecha Registro: {VehEncontrado[4]}Dueño: {VehEncontrado[5]}Tipo: {VehEncontrado[0]}Patente: {VehEncontrado[1]}Marca: {VehEncontrado[1]}Sello verde: APROBADO")
+                    Doc.append(EmiDoc)
+                    while OpEmi<1 or OpEmi>=3:
+                        print("¿Desea sumar otro documento?\n1)Si\n2)No")
+                        OpEmi=int(input())
+                        if OpEmi==1:
+                            OpDoc=0
+                        if OpEmi==2:
+                            print("Gracias por utilizar el sistema")
+                if OpDoc==2:
+                    AnoVig=(f"Anotaciones Vigentes:Fecha de Registro:{VehEncontrado[4]}Dueño:{VehEncontrado[5]}Tipo:{VehEncontrado[0]}Patente: {VehEncontrado[1]}Marca: {VehEncontrado[2]}")
+                    Doc.append(AnoVig)
+                    while OpEmi<1 or OpEmi>=3:
+                        print("¿Desea sumar otro documento?\n1)Si\n2)No")
+                        OpEmi=int(input())
+                        if OpEmi==1:
+                            OpDoc=0
+                        if OpEmi==2:
+                            print("Gracias por utilizar el sistema")
+                if OpDoc==3:
+                    Mult=1
+                    while OpEmi<1 or OpEmi>=3:
+                        print("¿Desea sumar otro documento?\n1)Si\n2)No")
+                        OpEmi=int(input())
+                        if OpEmi==1:
+                            OpDoc=0
+                        if OpEmi==2:
+                            print("Gracias por utilizar el sistema")
+                print(Doc)
+                if Mult==1:
+                    print(f"Multas:\n {VehEncontrado[6]}")
+        else:
+            print("Vehiculo no encontrado")
+        Op=0
+    elif Op==4:
+        print("Muchas Gracias por utilizar este sistema!!")
